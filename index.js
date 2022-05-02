@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 const database = process.env.MONGOLAB_URI;
 mongoose
   .connect(database, { useUnifiedTopology: true, useNewUrlParser: true })
-  .then(() => console.log("e don connect"))
+  .then(() => console.log("database connected"))
   .catch((err) => console.log(err));
 
 app.set("view engine", "ejs");
@@ -50,10 +50,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-//app.use("/api/users", require("./routes/api/users"));
+
 //Routes
 //app.get('/', (req, res) => res.redirect('views/login'))
 app.use("/", require("./routes/login"));
+app.use("/api/users", require("./routes/api/users"));
 const PORT = process.env.PORT || 4111;
 
 app.listen(PORT, console.log("Server has started at port " + PORT));
